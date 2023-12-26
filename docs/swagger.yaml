@@ -1,0 +1,362 @@
+basePath: /api/v1
+definitions:
+  gin.H:
+    additionalProperties: {}
+    type: object
+  handlers.Report:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  handlers.User:
+    properties:
+      id:
+        type: integer
+      login:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      surname:
+        type: string
+    type: object
+  handlers.UserMask:
+    properties:
+      name:
+        type: string
+      surname:
+        type: string
+    type: object
+externalDocs:
+  description: OpenAPI
+  url: https://swagger.io/resources/open-api/
+host: localhost:8080
+info:
+  contact:
+    email: support@swagger.io
+    name: Vladimir Vetrov
+    url: http://www.swagger.io/support
+  description: This is a simple Conference service.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /conference/addReport/{conference_id}/{report_id}/:
+    post:
+      consumes:
+      - application/json
+      description: Add New Report
+      parameters:
+      - description: conference id
+        in: path
+        name: conference_id
+        required: true
+        type: string
+      - description: report id
+        in: path
+        name: report_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Add New Report
+      tags:
+      - mai lab API
+  /conference/create/{conference_name}:
+    post:
+      consumes:
+      - application/json
+      description: Create New Conference
+      parameters:
+      - description: conference name
+        in: path
+        name: conference_name
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create New Conference
+      tags:
+      - mai lab API
+  /conference/getAllReports/{conference_id}/:
+    get:
+      consumes:
+      - application/json
+      description: Get All Reports In Conference
+      parameters:
+      - description: conference id
+        in: path
+        name: conference_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get All Reports In Conference
+      tags:
+      - mai lab API
+  /report/create:
+    post:
+      consumes:
+      - application/json
+      description: Create New Report
+      parameters:
+      - description: Report's data
+        in: body
+        name: user_log
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.Report'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Create New Report
+      tags:
+      - mai lab API
+  /report/getAll:
+    get:
+      consumes:
+      - application/json
+      description: Get All Reports
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              type: string
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Get All Reports
+      tags:
+      - mai lab API
+  /user/create:
+    post:
+      consumes:
+      - application/json
+      description: create a new user
+      parameters:
+      - description: User Data
+        in: body
+        name: user_data
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Creates a new user
+      tags:
+      - mai lab API
+  /user/findById/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Find User By Id
+      parameters:
+      - description: User id
+        in: path
+        name: user_id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/handlers.UserMask'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Find User By Id
+      tags:
+      - mai lab API
+  /user/findLogin/{user_log}:
+    get:
+      consumes:
+      - application/json
+      description: Find User By Login
+      parameters:
+      - description: User Login
+        in: path
+        name: user_log
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/handlers.UserMask'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Find User By Login
+      tags:
+      - mai lab API
+  /user/findMask:
+    post:
+      consumes:
+      - application/json
+      description: Find User By Mask
+      parameters:
+      - description: User Data with mask
+        in: body
+        name: user_log
+        required: true
+        schema:
+          $ref: '#/definitions/handlers.UserMask'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/handlers.UserMask'
+            type: array
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/gin.H'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/gin.H'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/gin.H'
+      summary: Find User By Mask
+      tags:
+      - mai lab API
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"

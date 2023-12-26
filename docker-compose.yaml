@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  mariadb:
+      container_name: mariadb
+      image: mariadb:10.8
+      ports:
+          - 3306:3306
+      environment:
+          MARIADB_DATABASE: maidb
+          MARIADB_USER: admin
+          MARIADB_PASSWORD: mai
+          MARIADB_ROOT_PASSWORD: supermai
+      volumes:
+        - ./schema/init.sql:/docker-entrypoint-initdb.d/init.sql
+      restart: always
+  redis:
+      container_name: redis
+      image: redis:latest
+      restart: always
+      ports:
+        - "6379:6379"
+  appsw:
+      container_name: appsw
+      build:
+        context: "./"
+      entrypoint: ./main
+      depends_on:
+        - mariadb
+        - redis
+      ports:
+        - 8080:8080
+      restart: on-failure
+
+
+
